@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+	}
+</style>
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "350" height = "500"  ></canvas>
+    <input type = "color" id = "picker"/>
+    <script>
+    	var canvas = document.querySelector("#myCanvas");
+		canvas.width=0.8*document.documentElement.clientWidth;
+    	canvas.height=0.8*document.documentElement.clientHeight;
+
+    	var ctx = canvas.getContext('2d');
+    	var isDrawing=true;
+    	var color = "red";
+    	var colorInput=document.querySelector("input");
+
+    	canvas.addEventListener("mousemove",draw);
+    	window.addEventListener("keydown",changeColor);
+
+    	window.addEventListener("keydown",clear);
+    	window.addEventListener("keydown",pen);
+    	colorInput.addEventListener("input",selectColor);
+
+        const mouse={x:0, y:0};
+        var bounds = canvas.getBoundingClientRect();
+    	
+    	function draw(e){
+            
+            mouse.x = (e.pageX - bounds.left)/bounds.width*canvas.width;
+            mouse.y = (e.pageY - bounds.top)/bounds.height*canvas.height;
+
+    		if (isDrawing == true){
+   			ctx.beginPath();
+   			ctx.arc(mouse.x, mouse.y, 10, 0, Math.PI * 2 );
+   			ctx.fillStyle = color; 
+   			ctx.fill();}
+    	}
+
+
+    	function changeColor(e){
+    		if (e.keyCode==66){
+    			color = "blue";
+    		}
+    		if (e.keyCode==89){
+    			color = "yellow";
+    		}
+
+    		if (e.keyCode==82){
+    			color = "red";
+    		}
+
+    		if (e.keyCode==71){
+    			color = "green";
+    		}
+    	}
+
+    	function clear(e){
+    		if (e.keyCode==32){
+    			ctx.clearRect(0, 0, canvas.width, canvas.height);
+    		}
+    	}
+
+    	function pen(e){
+    		if (e.keyCode==38){
+    			isDrawing=false;
+    		}
+    		if (e.keyCode==40){
+    			isDrawing=true;
+    		}
+    	}
+
+    	function selectColor(e){
+    		color=e.target.value;
+    	}
+
+    </script>
+</body>
+</html>
