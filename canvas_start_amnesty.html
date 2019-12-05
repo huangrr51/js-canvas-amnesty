@@ -38,10 +38,9 @@
         var bounds = canvas.getBoundingClientRect();
     	
     	function draw(e){
-            
-            mouse.x = (e.pageX - bounds.left)/bounds.width*canvas.width;
-            mouse.y = (e.pageY - bounds.top)/bounds.height*canvas.height;
 
+            mouse.x = e.pageX - bounds.left - (bounds.width-canvas.width)/2 ;
+            mouse.y = e.pageY - bounds.top - (bounds.width-canvas.width)/2 ;
     		if (isDrawing == true){
    			ctx.beginPath();
    			ctx.arc(mouse.x, mouse.y, 10, 0, Math.PI * 2 );
